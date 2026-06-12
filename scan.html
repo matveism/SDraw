@@ -68,14 +68,12 @@ document.getElementById("scanBtn").onclick = async () => {
 
   const resultDiv = document.getElementById("result");
 
-  // If Apps Script says "no match"
-  if (!json.match || json.match === "null" || json.match === "") {
+  if (!json.match) {
     resultDiv.innerHTML =
       "<span class='error'>❌ ERROR: Drawing NOT registered</span>";
     return;
   }
 
-  // Success
   resultDiv.innerHTML =
     "<span class='success'>✔ Registered Drawing ID: " + json.match + "</span>";
 };
