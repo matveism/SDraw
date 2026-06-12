@@ -6,6 +6,7 @@
   <style>
     body { font-family: Arial; max-width: 500px; margin: 20px auto; }
     input, button { width: 100%; padding: 10px; margin-top: 10px; }
+    #status { margin-top: 15px; font-size: 18px; font-weight: bold; }
   </style>
 </head>
 <body>
@@ -44,7 +45,8 @@ document.getElementById("regForm").addEventListener("submit", async (e) => {
     const res = await fetch(SCRIPT_URL, { method: "POST", body: formData });
     const json = await res.json();
 
-    document.getElementById("status").innerText = "Saved ✔";
+    document.getElementById("status").innerHTML =
+      "<span style='color:green'>✔ Saved Successfully</span>";
   };
 
   reader.readAsDataURL(file);
