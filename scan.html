@@ -10,17 +10,12 @@
 
     #result {
       margin-top: 15px;
-      font-size: 20px;
+      font-size: 22px;
       font-weight: bold;
     }
 
-    .error {
-      color: red;
-    }
-
-    .success {
-      color: green;
-    }
+    .error { color: red; }
+    .success { color: green; }
   </style>
 </head>
 <body>
@@ -73,13 +68,14 @@ document.getElementById("scanBtn").onclick = async () => {
 
   const resultDiv = document.getElementById("result");
 
-  // If Apps Script returns null or empty → NOT REGISTERED
+  // If Apps Script says "no match"
   if (!json.match || json.match === "null" || json.match === "") {
-    resultDiv.innerHTML = "<span class='error'>❌ ERROR: Drawing NOT registered</span>";
+    resultDiv.innerHTML =
+      "<span class='error'>❌ ERROR: Drawing NOT registered</span>";
     return;
   }
 
-  // Otherwise → success
+  // Success
   resultDiv.innerHTML =
     "<span class='success'>✔ Registered Drawing ID: " + json.match + "</span>";
 };
