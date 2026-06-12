@@ -23,13 +23,26 @@
 <script>
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxE9TEZwyIGrCFtFhWeHG8yTdWRKWc0A_Vb02EZl6bvG6fVeWsL3sAHQxD-BC6x2eJ1/exec";
 
+// Force BACK CAMERA ONLY
+const constraints = {
+  video: {
+    facingMode: { exact: "environment" }
+  }
+};
+
 const video = document.getElementById("camera");
 const canvas = document.getElementById("snapshot");
 const ctx = canvas.getContext("2d");
 
-navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
-  video.srcObject = stream;
-});
+// Start camera
+navigator.mediaDevices.getUserMedia(constraints)
+  .then(stream => {
+    video.srcObject = stream;
+  })
+  .catch(err => {
+    document.getElementById("result").innerHTML =
+      "Back camera not available on this device.";
+  });
 
 document.getElementById("scanBtn").onclick = async () => {
   canvas.width = video.videoWidth;
