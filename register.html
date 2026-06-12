@@ -45,8 +45,13 @@ document.getElementById("regForm").addEventListener("submit", async (e) => {
     const res = await fetch(SCRIPT_URL, { method: "POST", body: formData });
     const json = await res.json();
 
-    document.getElementById("status").innerHTML =
-      "<span style='color:green'>✔ Saved Successfully</span>";
+    if (json.status === "saved") {
+      document.getElementById("status").innerHTML =
+        "<span style='color:green'>✔ Saved Successfully</span>";
+    } else {
+      document.getElementById("status").innerHTML =
+        "<span style='color:red'>❌ Error saving</span>";
+    }
   };
 
   reader.readAsDataURL(file);
