@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Register Drawing</title>
+  <style>
+    body { font-family: Arial; max-width: 500px; margin: 20px auto; }
+    input, button { width: 100%; padding: 10px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+
+<h2>Register New Drawing</h2>
+
+<form id="regForm">
+  <label>Drawing ID</label>
+  <input type="text" id="drawingId" name="id" required>
+
+  <label>Upload Drawing Image</label>
+  <input type="file" id="drawingFile" accept="image/*" required>
+
+  <button type="submit">Save to Sheet</button>
+</form>
+
+<div id="status"></div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxE9TEZwyIGrCFtFhWeHG8yTdWRKWc0A_Vb02EZl6bvG6fVeWsL3sAHQxD-BC6x2eJ1/exec";
+
+document.getElementById("regForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const id = document.getElementById("drawingId").value;
+  const file = document.getElementById("drawingFile").files[0];
+
+  const reader = new FileReader();
+  reader.onload = async function() {
+    const base64 = reader.result;
+
+    const formData = new FormData();
+    formData.append("id", id);
+    formData.append("image", base64);
+
+    const res = await fetch(SCRIPT_URL, { method: "POST", body: formData });
+    const json = await res.json();
+
+    document.getElementById("status").innerText = "Saved ✔";
+  };
+
+  reader.readAsDataURL(file);
+});
+</script>
+
+</body>
+</html>
